@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Clock & Stopwatch</title>
+
+  <style>
+
+    body{
+      font-family: 'Times New Roman', Times, serif;
+      text-align: center;
+      background: lightblue;
+      margin-top: 80px;
+    }
+
+    h1{
+      margin-bottom: 20px;
+    }
+
+    #clock{
+      font-size: 50px;
+      margin-bottom: 50px;
+      color: darkblue;
+      
+    }
+
+    #stopwatch{
+      font-size: 50px;
+      margin-bottom: 20px;
+      color: darkred;
+    }
+
+    button{
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <h1>Digital Clock</h1>
+
+  <div id="clock">00:00:00</div>
+
+  <h1>Stopwatch</h1>
+
+  <div id="stopwatch">00:00:00</div>
+
+  <button onclick="start()">Start</button>
+  <button onclick="stop()">Stop</button>
+  <button onclick="reset()">Reset</button>
+
+  <script>
+
+    // DIGITAL CLOCK
+
+    function showClock(){
+
+      let now = new Date();
+
+      let h = now.getHours();
+      let m = now.getMinutes();
+      let s = now.getSeconds();
+
+      h = String(h).padStart(2,'0');
+      m = String(m).padStart(2,'0');
+      s = String(s).padStart(2,'0');
+
+      document.getElementById("clock").innerHTML =
+        h + ":" + m + ":" + s;
+    }
+
+    setInterval(showClock,1000);
+
+
+
+    // STOPWATCH
+
+    let seconds = 0;
+    let timer;
+
+    function updateStopwatch(){
+
+      seconds++;
+
+      let hrs = Math.floor(seconds / 3600);
+      let mins = Math.floor((seconds % 3600) / 60);
+      let secs = seconds % 60;
+
+      hrs = String(hrs).padStart(2,'0');
+      mins = String(mins).padStart(2,'0');
+      secs = String(secs).padStart(2,'0');
+
+      document.getElementById("stopwatch").innerHTML =
+        hrs + ":" + mins + ":" + secs;
+    }
+
+    function start(){
+
+      clearInterval(timer);
+
+      timer = setInterval(updateStopwatch,1000);
+    }
+
+    function stop(){
+      clearInterval(timer);
+    }
+
+    function reset(){
+
+      clearInterval(timer);
+
+      seconds = 0;
+
+      document.getElementById("stopwatch").innerHTML =
+        "00:00:00";
+    }
+
+  </script>
+
+</body>
+</html>
